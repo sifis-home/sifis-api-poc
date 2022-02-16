@@ -1,11 +1,9 @@
 mod context;
 mod light;
-mod ontology;
 mod oven;
 
 pub use context::*;
 pub use light::*;
-pub use ontology::*;
 pub use oven::*;
 
 /// Define the type of a connected object.
