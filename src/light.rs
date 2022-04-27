@@ -33,22 +33,19 @@ impl Light {
             .properties
             .values()
             .find(|p| p.has_attype("OnOff"))
-            .map(|p| p.set(true).ok())
-            .flatten()
+            .and_then(|p| p.set(true).ok())
             .ok_or(anyhow!("Error"))?;
         self.0
             .properties
             .values()
             .find(|p| p.has_attype("BrightnessProperty"))
-            .map(|p| p.set(brightness.0).ok())
-            .flatten()
+            .and_then(|p| p.set(brightness.0).ok())
             .ok_or(anyhow!("Error"))?;
         self.0
             .properties
             .values()
             .find(|p| p.has_attype("ColorProperty"))
-            .map(|p| p.set(&color.to_string()).ok())
-            .flatten()
+            .and_then(|p| p.set(&color.to_string()).ok())
             .ok_or(anyhow!("Error"))
     }
 
@@ -58,8 +55,7 @@ impl Light {
             .properties
             .values()
             .find(|p| p.has_attype("OnOff"))
-            .map(|p| p.set(false).ok())
-            .flatten()
+            .and_then(|p| p.set(false).ok())
             .ok_or(anyhow!("Error"))
     }
 }

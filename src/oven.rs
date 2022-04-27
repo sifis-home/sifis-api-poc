@@ -35,15 +35,13 @@ impl Oven {
             .properties
             .values()
             .find(|p| p.has_attype("OnOff"))
-            .map(|p| p.set(true).ok())
-            .flatten()
+            .and_then(|p| p.set(true).ok())
             .ok_or(anyhow!("Error"))?;
         self.0
             .properties
             .values()
             .find(|p| p.has_attype("Temperature"))
-            .map(|p| p.set(temperature.0).ok())
-            .flatten()
+            .and_then(|p| p.set(temperature.0).ok())
             .ok_or(anyhow!("Error"))
     }
 
@@ -53,8 +51,7 @@ impl Oven {
             .properties
             .values()
             .find(|p| p.has_attype("OnOff"))
-            .map(|p| p.set(false).ok())
-            .flatten()
+            .and_then(|p| p.set(false).ok())
             .ok_or(anyhow!("Error"))
     }
 }

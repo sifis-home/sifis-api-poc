@@ -19,9 +19,7 @@ impl Context {
             .discovery
             .discover_timeout(Duration::from_secs(2))?
             .into_iter()
-            .filter(|t| t.has_attype(T::AT_TYPE))
-            .map(|t| t.try_into().ok())
-            .flatten()
+            .filter_map(|t| t.try_into().ok())
             .collect();
         Ok(all)
     }
@@ -32,8 +30,7 @@ impl Context {
             .into_iter()
             .filter(|co| co.has_attype(T::AT_TYPE))
             .find(|co| co.id == id)
-            .map(|t| t.try_into().ok())
-            .flatten()
+            .and_then(|t| t.try_into().ok())
             .ok_or_else(|| anyhow!("Not found!"))
     }
 }
