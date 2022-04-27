@@ -28,9 +28,9 @@ impl Oven {
     ///
     /// * Fire hazard\
     ///   The execution may cause fire
-    /// * Audio video stream\
-    ///   The execution authorises the app to obtain a video stream with audio
-    pub fn turn_oven_on(&mut self, temperature: Percentage, enable_camera: bool) -> Result<()> {
+    /// * Electric energy consumption\
+    ///   The execution enables a device that consumes electricity
+    pub fn turn_oven_on(&mut self, temperature: Percentage) -> Result<()> {
         self.0
             .properties
             .values()
@@ -43,13 +43,6 @@ impl Oven {
             .values()
             .find(|p| p.has_attype("Temperature"))
             .map(|p| p.set(temperature.0).ok())
-            .flatten()
-            .ok_or(anyhow!("Error"))?;
-        self.0
-            .properties
-            .values()
-            .find(|p| p.has_attype("Camera"))
-            .map(|p| p.set(enable_camera).ok())
             .flatten()
             .ok_or(anyhow!("Error"))
     }
